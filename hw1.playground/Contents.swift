@@ -13,7 +13,7 @@ class Words {
     var wordA : String!
     var wordB : String!
     
-    init (wordA: String?, wordB: String?) {
+    init (wordA: String!, wordB: String!) {
         self.wordA = wordA
         self.wordB = wordB
     }
@@ -22,40 +22,40 @@ class Words {
 //: ### variables the same type? If not, why?
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
-
+//: Yes, we have forced them to both be strings and it will fail otherwise.
 
 //: ## Q2: Variable Types and Function Types
-    func arePalindromes(words: [String]) -> Bool {
-        let reversedWords = words.map() {String($0.characters.reverse())}
-        var numElements = words.count
-        
-        for let i = 0; i < numElements; i++ {
+    class func arePalindromes(words: [String]) -> Bool {
+        let reversedWords = words.map( {String($0.characters.reverse())})
+        let numElements = words.count
+        for var i = 0; i < numElements; i++ {
             if words[i] != reversedWords[i] {
                 return false
             }
         }
+        return true
     }
-//: ### Why does the compiler dislike the **for loop**? Fix it.
-//: ### What else is wrong with this function? You may have to refer to (but **not**
+//: ### a. Why does the compiler dislike the **for loop**? Fix it.
+//: ### b. What else is wrong with this function? You may have to refer to (but **not**
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
-
+//: a. i should be a var and not a let, since we want to increment i
+//: b. we should return a value since it specifies to return a bool
+//: additionally, we need to fix map so that it's called correctly
 
 //: ## Q3: More Functions and Object Initialization
-    class func isAnagram() -> Bool {
-        var countLetters : [Character : Int] //Line X
-        var lenA = self.wordA.characters.count
-        var lenB = self.wordB.characters.count
+    func isAnagram() -> Bool {
+        var countLetters = [Character : Int]() //Line X
+        let lenA = wordA.characters.count
+        let lenB = wordB.characters.count
         
         if lenA != lenB {
             return false
         }
         
-        var arrA = Array(self.wordA.characters)
-        var arrB = Array(self.wordB.characters)
+        var arrA = Array(wordA.characters)
+        var arrB = Array(wordB.characters)
         
         for i in 0...lenA-1 {
             let letter = arrA[i]
@@ -75,13 +75,13 @@ class Words {
             }
         }
         
-        for (letter, count) in countLetters {
+        for (_, count) in countLetters {
             if count != 0 {
                 return false
             }
         }
         
-        return nil
+        return true
     }
 //: ### What is the problem with declaring **countLetters** as we do in **Line X**,
 //: ### and then using it in **Line Y**? Fix it (by only changing **Line X**).
@@ -89,8 +89,8 @@ class Words {
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
-    
+//: We must have a non-nil dictionary of characters mapped to integer values, and should
+//: NOT try to access elements that to don't exist. In this case, we initialize the dict.
     
 }
 
@@ -100,6 +100,13 @@ class Words {
 //: ### debugged the code above. Remember that you must also fully and correctly answer
 //: ### all of the written questions above to receive full credit for this homework.
 
+var zz = Words(wordA: "wow",wordB: "wow")
+Words.arePalindromes(["wow", "wow"])
+print("hello world")
+// used http://www.dotnetperls.com/dictionary-swift as a reference.
+
+// methodA
+// Foo.methodA(bar: Int = 5)
 
 //: **DO NOT** touch any code below this point.
 Words.arePalindromes(["hih", "racecar", "mom", "wow"])
